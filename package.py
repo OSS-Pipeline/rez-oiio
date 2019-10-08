@@ -55,7 +55,7 @@ uuid = "oiio-{version}".format(version=str(version))
 def commands():
     env.PATH.prepend("{root}/bin")
     env.LD_LIBRARY_PATH.prepend("{root}/lib64")
-    env.PYTHONPATH.prepend("{root}/lib64/python2.7/site-packages")
+    env.PYTHONPATH.prepend("{root}/lib64/python" + str(env.REZ_PYTHON_MAJOR_VERSION) + "." + str(env.REZ_PYTHON_MINOR_VERSION) + "/site-packages")
 
     # Helper environment variables.
     env.OIIO_BINARY_PATH.set("{root}/bin")
