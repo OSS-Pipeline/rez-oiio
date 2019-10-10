@@ -25,7 +25,6 @@ requires = [
     "openexr-2.2+<2.4",
     "openjpeg-2+",
     "png-1.6+",
-    "ptex-2.1+",
     "pybind11-2.2+",
     "python-2.7+<3",
     "tiff-4+",
