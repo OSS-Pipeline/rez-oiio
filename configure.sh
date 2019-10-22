@@ -40,40 +40,47 @@ cd ${BUILD_PATH}
 
 # sed "s|find_package (PythonLibs \${PYTHON_VERSION} REQUIRED)|find_package (Python \${PYTHON_VERSION} REQUIRED COMPONENTS Interpreter Development NumPy)|1" --in-place ${EXTRACT_PATH}/src/python/CMakeLists.txt
 
+# We disable the support for PNG for now, as it seems to cause issues for building OSL, which ends up trying to link
+# our own version of libpng against the system version of libz, which can be too old and create undefined reference
+# for "oslc", but strangely not for "testshade_dso".
 cmake \
     ${BUILD_PATH}/.. \
     -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH} \
-    -DCMAKE_C_FLAGS=-fPIC \
-    -DCMAKE_CXX_FLAGS=-fPIC \
+    -DCMAKE_C_FLAGS="-fPIC" \
+    -DCMAKE_CXX_FLAGS="-fPIC" \
     -DCMAKE_POLICY_DEFAULT_CMP0072=NEW \
     -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
-    -DVERBOSE=ON \
+    -DOIIO_BUILD_TESTS=ON \
     -DOIIO_BUILD_TOOLS=ON \
-    -DOIIO_BUILD_TESTS=OFF \
-    -DUSE_OPENGL=OFF \
-    -DUSE_QT=OFF \
-    -DUSE_PYTHON=ON \
-    -DPYTHON_VERSION=${REZ_PYTHON_MAJOR_VERSION}.${REZ_PYTHON_MINOR_VERSION} \
-    -DUSE_FIELD3D=OFF \
+    -DUSE_EXTERNAL_PUGIXML=ON \
     -DUSE_FFMPEG=OFF \
-    -DUSE_OPENJPEG=ON \
-    -DUSE_OCIO=OFF \
-    -DUSE_OPENCV=OFF \
-    -DUSE_OPENSSL=OFF \
+    -DUSE_FIELD3D=OFF \
     -DUSE_FREETYPE=OFF \
     -DUSE_GIF=OFF \
-    -DUSE_PTEX=OFF \
+    -DUSE_JPEGTURBO=ON \
+    -DUSE_LIBCPLUSPLUS=OFF \
     -DUSE_LIBRAW=OFF \
     -DUSE_NUKE=OFF \
-    -DUSE_LIBCPLUSPLUS=OFF \
-    -DZLIB_ROOT=${REZ_ZLIB_ROOT} \
-    -DPNG_ROOT=${REZ_PNG_ROOT} \
-    -DTIFF_ROOT=${REZ_TIFF_ROOT} \
-    -DILMBASE_INCLUDE_PATH=${REZ_ILMBASE_ROOT}/include \
-    -DOPENEXR_INCLUDE_PATH=${REZ_OPENEXR_ROOT}/include \
+    -DUSE_OCIO=OFF \
+    -DUSE_OPENCV=OFF \
+    -DUSE_OPENGL=OFF \
+    -DUSE_OPENJPEG=ON \
+    -DUSE_OPENSSL=OFF \
+    -DUSE_PTEX=OFF \
+    -DUSE_PYTHON=ON \
+    -DUSE_QT=OFF \
+    -DVERBOSE=ON \
     -DBOOST_ROOT=${REZ_BOOST_ROOT} \
-    -DJPEG_ROOT=${REZ_JPEG_ROOT} \
-    -DOPENJPEG_HOME=${REZ_OPENJPEG_ROOT}
+    -DILMBASE_INCLUDE_PATH=${REZ_ILMBASE_ROOT}/include \
+    -DJPEGTURBO_PATH=${REZ_JPEG_TURBO_ROOT} \
+    -DJPEG_INCLUDE_DIR=${REZ_JPEG_TURBO_ROOT}/include \
+    -DJPEG_LIBRARY=${REZ_JPEG_TURBO_ROOT}/lib64/libturbojpeg.so \
+    -DOPENEXR_INCLUDE_PATH=${REZ_OPENEXR_ROOT}/include \
+    -DOPENJPEG_HOME=${REZ_OPENJPEG_ROOT} \
+    -DPUGIXML_HOME=${REZ_PUGIXML_ROOT} \
+    -DPYTHON_VERSION=${REZ_PYTHON_MAJOR_VERSION}.${REZ_PYTHON_MINOR_VERSION} \
+    -DTIFF_ROOT=${REZ_TIFF_ROOT} \
+    -DZLIB_ROOT=${REZ_ZLIB_ROOT}
 
 echo -e "\n"
 echo -e "[CONFIGURE] Finished configuring OIIO-${OIIO_VERSION}!"
