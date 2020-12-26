@@ -1,6 +1,6 @@
 name = "oiio"
 
-version = "1.8.17"
+version = "2.1.16.0"
 
 authors = [
     "Sony Pictures Imageworks"
@@ -15,18 +15,21 @@ description = \
     """
 
 requires = [
-    "boost-1.53+",
+    "boost-1.61+",
     "cmake-3+",
     "gcc-6+",
     "glew-2+",
     "ilmbase-2.2+<2.4",
     "jpeg_turbo-2+",
     "numpy-1.12+",
+    "ocio-1.0.9+",
     "openexr-2.2+<2.4",
     "openjpeg-2+",
+    "png-1.6+",
     "pugixml-1+",
     "pybind11-2.2+",
     "python-2.7+<3",
+    "tbb-2017.U6+",
     "tiff-4+",
     "zlib-1.2+"
 ]
